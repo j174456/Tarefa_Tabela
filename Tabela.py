@@ -2,7 +2,7 @@
 # João Pedro Coelho de Sousa | RA: 174456
 # Myrelle Silva Lopes | RA: 242265
 
-
+import ast
 from Linha import Linha
 
 class Tabela:
@@ -12,8 +12,13 @@ class Tabela:
     
     def __init__(self,arquivo):
         file = open(arquivo,"r")
+        valores = file.readlines()
+        file.close
         self.cabecalho = Linha()
+        self.cabecalho.append(ast.literal_eval(valores[0]))
         self.dados = []
+        for c in range(1,len(valores)):
+            self.dados.append(ast.literal_eval(valores[c]))
         
 
     def add_cabecalho(self, lista):
@@ -28,7 +33,7 @@ class Tabela:
 
 
     def __str__(self):
-        string = str(self.cabecalho) + "\n" 
+        string = str(self.cabecalho.dados) + "\n" 
         string += "---------------------------------------\n"
         for i in range(0,len(self.dados)):
             string += str(self.dados[i]) + "\n"
@@ -40,4 +45,22 @@ class Tabela:
     
     def ordenando_por(self,dados):
         return dados[self._index]
-        
+
+    def writeFile(self,path):
+        self.addItem(self.cabecalho.dados,path)
+        for linha in self.dados:
+            self.addItem(str(linha),path)
+
+    def addItem(self,item,path):
+        file = open(path,"a")
+        file.write(str(item)+"\n")
+        file.close()
+
+
+#teste = Tabela("carros.txt")
+#print(teste)
+
+#teste.writeFile("saida.txt")
+
+#teste = Tabela("saida.txt")
+#print(teste)
