@@ -25,3 +25,9 @@ class Linha:
     
     def __getitem__(self,key):
         return self.dados[key]
+    
+    def alterData(self,index,newValue=None):
+        if newValue is not None:
+            self.dados[index] = newValue
+        else: 
+            self.dados[index] += 1

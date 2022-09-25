@@ -6,19 +6,20 @@ import ast
 from Linha import Linha
 
 class Tabela:
-    def __init__(self):
-        self.dados = []
-        self.cabecalho = Linha()
-    
-    def __init__(self,arquivo):
-        file = open(arquivo,"r")
-        valores = file.readlines()
-        file.close
-        self.cabecalho = Linha()
-        self.cabecalho.append(ast.literal_eval(valores[0]))
-        self.dados = []
-        for c in range(1,len(valores)):
-            self.dados.append(ast.literal_eval(valores[c]))
+    # Overload n existe, então fazemos a validação via arquivo None
+    def __init__(self,arquivo=None):
+        if arquivo is None:
+            self.dados = []
+            self.cabecalho = Linha()
+        else: 
+            file = open(arquivo,"r")
+            valores = file.readlines()
+            file.close
+            self.cabecalho = Linha()
+            self.cabecalho.append(ast.literal_eval(valores[0]))
+            self.dados = []
+            for c in range(1,len(valores)):
+                self.dados.append(ast.literal_eval(valores[c]))
         
 
     def add_cabecalho(self, lista):
@@ -55,12 +56,3 @@ class Tabela:
         file = open(path,"a")
         file.write(str(item)+"\n")
         file.close()
-
-
-#teste = Tabela("carros.txt")
-#print(teste)
-
-#teste.writeFile("saida.txt")
-
-#teste = Tabela("saida.txt")
-#print(teste)

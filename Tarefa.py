@@ -38,7 +38,6 @@ teste.writeFile("saida.txt")
 
 teste = Tabela("saida.txt")
 print(teste)
-
 # Seu grupo também ira receber um arquivo contendo uma tabela com os candidatos
 # a deputado federal por São Paulo.
 #
@@ -53,7 +52,6 @@ candidatos = TabelaBD("candidados_dep_fed.txt")
 # na coluna partido. Veja o resultado abaixo:
 result = candidatos.conta("Partido")
 print(result)
-
 # ['Partido', 'numero']
 # ----------------------
 # ['UP', 1]
