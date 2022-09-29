@@ -1,10 +1,9 @@
 # Arthur Gallotti Silva Conti | RA: 165942
 # João Pedro Coelho de Sousa | RA: 174456
 # Myrelle Silva Lopes | RA: 242265
-from os import getgrouplist
 import Tabela
 from Linha import Linha
-import ast
+#import ast
 
 class TabelaBD(Tabela.Tabela):
     # Overload n existe, então fazemos a validação via arquivo None
@@ -33,7 +32,9 @@ class TabelaBD(Tabela.Tabela):
             line = Linha()
             line.append([key,value])
             table.addLinha(line)
+        table.ordena_por("numero")
         return table
+    
     def writeFile(self, path):
         return super().writeFile(path)
     

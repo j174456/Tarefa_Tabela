@@ -1,4 +1,3 @@
-['placa', 'ano', 'marca', 'modelo']
 ['PAF1A79', 2020, 'volkswagem', 'gol']
 ['OWH2Z46', 2017, 'volkswagem', 'polo']
 ['IRD3T61', 2016, 'volkswagem', 'gol']

@@ -49,6 +49,7 @@ class Tabela:
 
     def writeFile(self,path):
         self.addItem(self.cabecalho.dados,path)
+        file = open(path,"w").close()
         for linha in self.dados:
             self.addItem(str(linha),path)
 
