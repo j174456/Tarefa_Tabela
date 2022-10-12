@@ -8,6 +8,7 @@ Original file is located at
 """
 
 from PIL import Image
+import random
 
 img = Image.new("RGB",(1001,1001),"white")
 
@@ -42,10 +43,16 @@ pixeis = img.load()
 R = 132
 G = 245
 B = 66
-
 cor = (R,G,B)
+coordenadas = criarmatriz()
+t = dict()
+for i in coordenadas:
+    if i[1] not in t:
+      cor = (random.choice(range(0, 255)),random.choice(range(0, 255)),random.choice(range(0, 255)))
+      t[i[1]] = cor
+
 
 for x in range(0,len(latitude)):
- pixeis[latitude[x],longitude[x]] = cor
+ pixeis[latitude[x],longitude[x]] = t[coordenadas[x][1]]
 
 img.save("Brasil.png")
