@@ -1,43 +1,45 @@
 from PIL import Image
 from sklearn import preprocessing
-import pandas as pd
+import random
 
-img = Image.new("RGB",(1001,1001),"white")
-img.save("Brasil.png")
+points = []
+states = []
+color = dict()
 
-def criarmatriz():
-  file = open("coordenadas.txt","r")
-  coordenadas = file.read().splitlines()
-  file.close()
+file = open("coordenadas.txt", "r")
+documentCoordinates = file.readlines()
+file.close()
 
-  for x in range(0,len(coordenadas)):
-    coordenadas[x] = coordenadas[x].split(';')
-    coordenadas[x][3]= float(coordenadas[x][3])
-    coordenadas[x][4]= float(coordenadas[x][4])
-  return coordenadas
+#-----------------------Define coordinate-------------------------#
+for line in documentCoordinates:
+  splitLine = line.split(';')
+  latitudeLine = (splitLine[3])
+  longitudeLine = (splitLine[4].strip()) 
 
-coordenadaDaLinha = []
-pontos=[]
+  coordinateLine = [latitudeLine, longitudeLine]
+  states += [splitLine[1]]
+  
+  points.append(coordinateLine)
 
-for linha in criarmatriz():
-  coordenadaDaLinha = [linha[3], linha[4]]
-  pontos.append(coordenadaDaLinha)
-
+#-----------------------Normalize coordinates-------------------------#
 scaler = preprocessing.MinMaxScaler(feature_range=(0, 1000))
-normalizado = scaler.fit_transform(pontos)
-print(str(normalizado))
+coordinateNormalize = scaler.fit_transform(points)
+
+#-----------------------Generate Random Color-------------------------#
+for state in states:
+  if state not in color:
+    randomColor = (random.choice(range(0, 255)),random.choice(range(0, 255)),random.choice(range(0, 255)))
+    color[state] = randomColor
 
 img = Image.new("RGB",(1001,1001),"white")
-pixeis = img.load()
-R = 132
-G = 245
-B = 66
+pixels = img.load()
 
-cor = (R,G,B)
+#-----------------------Create image from coordinate------------------#
+for posicao in range(0,len(coordinateNormalize)):
+  latitude = coordinateNormalize[posicao][0]
+  longitude = coordinateNormalize[posicao][1]
+  
+  pixels[latitude, longitude] = color[states[posicao]]
 
-for posicao in range(0,len(normalizado)):
-  latitude = abs(normalizado[posicao][0])
-  longitude = abs(normalizado[posicao][1])
-  pixeis[latitude, longitude] = cor
-
-img.save("Brasil.png")
+rotated = img.rotate(90)
+rotated.save("Brasil.png")
