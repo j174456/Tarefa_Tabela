@@ -12,7 +12,7 @@ print(cord1)
 # o valor impresso no print é (0,0).
 #
 cord1 = Coordenada((5, 5))
-print(cord1)
+print(str(cord1))
 # Neste caso é criada uma coordenada na posição (5,5).
 # Se for passado mais de um elemento no construtor, deve ser
 # subir uma exceção: número de parâmetros errado. Veja o exemplo abaixo:
