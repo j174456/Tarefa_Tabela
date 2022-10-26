@@ -88,7 +88,6 @@ print(rota1)
 # No exemplo anterior é a disância entre as coordenadas abaixo:
 # (0, 0)->(0, 4)->(3, 4)->(0, 0)
 print(rota1.comprimento())
-
 # neste caso deve ser impresso 12 que representa a soma dos três lados
 # dos triangulo, um com tamanho 3, outro com 4 e o último com 5.
 
@@ -122,6 +121,7 @@ print(rota1.comprimento())
 
 
 # A seguinte função otimiza (reduz) o comprimento da rota.
+
 print("---Otimiza----")
 mudou  = True
 while(mudou):
@@ -133,6 +133,17 @@ while(mudou):
             rota1 = rotaAux
             print(rota1.comprimento())
             mudou = True
+
+print("---Otimiza2----")
+aux = list()
+for x in rota1.coordenadas:
+    aux.append((x.x,x.y))
+aux.sort()
+rota1.coordenadas = []
+for x in aux:
+    rota1.addCoord(Coordenada(x))
+
+print(rota1.comprimento())
 
 
 # Você deve melhorar esta função. Fazer otimizar mais rápido.
