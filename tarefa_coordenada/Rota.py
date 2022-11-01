@@ -1,5 +1,6 @@
 import math
 import random
+import time
 class Rota:
     def __init__(self):
         self.coordenadas = []
@@ -34,6 +35,38 @@ class Rota:
 
     def shuffle(self):
         random.shuffle(self.coordenadas)
+
+    def espera(self, tempo):
+        tempo = tempo/1000
+        start = time.time()
+        delta = 0
+        while (delta < tempo):
+            delta = time.time() - start
+    # acrescentar print de segundo
+
+    def randomCoords(self, quantidade, intervalo):
+        self.coordenadas = []
+        newCoor = ()
+        for i in range(quantidade):
+            newCoor = (random.randrange(1, intervalo), random.randrange(1, intervalo))
+            self.addCoord(newCoor)
+
+    def maximo(self):
+        max_x = 0
+        max_y = 0
+        for coordenada in self.coordenadas:
+            if max_x == 0 or max_x < coordenada[0]:
+                max_x = coordenada[0]
+            if max_y == 0 or max_y < coordenada[1]:
+                max_y = coordenada[1]
+        maxCoor = (max_x, max_y)
+        return str(maxCoor)
+
+    def desenha(self, nome):
+        pass
+
+    def otimiza(self):
+        pass
 
         
         
