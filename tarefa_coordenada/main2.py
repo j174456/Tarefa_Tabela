@@ -7,9 +7,9 @@ from Rota import Rota
 
 rota = Rota()
 # # tempo em ms
-# t = 2000
+t = 2000
 # # Explicação do método abaixo.
-# rota.espera(t)
+rota.espera(t)
 # Ao ser chamada, esta função deve fazer uma espera de t milisegundos.
 # Você não deve usar sleep. Você deve usar o time.time().
 # Além disso, a cada segundo, deve ser impresso uma mensagem conforme
@@ -64,8 +64,8 @@ print(rota.maximo())
 # # Número esperado de linhas: 10
 
 # # imprimir a rota criada.
-# filename = "rotaA.png"
-# rota.desenha(filename).show()
+filename = "rotaA.png"
+rota.desenha(filename).show()
 # # Esta função deve criar uma imagem de tamanho adequado,
 # # um pouco maior que (max_x,max_y) e imprimir uma linha reta
 # # entre as coordenadas. Uma linha reta entre a primeira e a segunda
@@ -80,13 +80,13 @@ print(rota.maximo())
 # # do método.
 
 # # Cria um novo conjunto de coordenadas aleatórios e imprime
-# n = 10
-# max_coord = 400
-# rota.randomCoords(n, max_coord)
-# rota.desenha("rota10.png").show()
+n = 10
+max_coord = 400
+rota.randomCoords(n, max_coord)
+rota.desenha("rota10.png").show()
 # # implementar uma função de otimização
-# rota.otimiza()
-# rota.desenha("rota10_Otimizada.png").show()
+rota.otimiza()
+rota.desenha("rota10_Otimizada.png").show()
 
 
 # # A função rota.otimiza() otimiza a rota. Ela troca os elementos de posição de
