@@ -64,8 +64,8 @@ print(rota.maximo())
 # # Número esperado de linhas: 10
 
 # # imprimir a rota criada.
-filename = "rotaA.png"
-rota.desenha(filename).show()
+#filename = "rotaA.png"
+#rota.desenha(filename).show()
 # # Esta função deve criar uma imagem de tamanho adequado,
 # # um pouco maior que (max_x,max_y) e imprimir uma linha reta
 # # entre as coordenadas. Uma linha reta entre a primeira e a segunda
@@ -85,8 +85,13 @@ max_coord = 400
 rota.randomCoords(n, max_coord)
 rota.desenha("rota10.png").show()
 # # implementar uma função de otimização
+print(rota.comprimento())
+print(rota)
 rota.otimiza()
 rota.desenha("rota10_Otimizada.png").show()
+print(rota.comprimento())
+print(rota)
+
 
 
 # # A função rota.otimiza() otimiza a rota. Ela troca os elementos de posição de
