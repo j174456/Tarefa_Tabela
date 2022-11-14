@@ -84,6 +84,7 @@ class Rota:
         return img
 
     def otimiza(self):
+        '''
         aux = list()
         for x in self.coordenadas:
             aux.append((x.x,x.y))
@@ -91,6 +92,29 @@ class Rota:
         self.coordenadas = []
         for x in aux:
             self.addCoord(Coordenada(x))
-
+        '''
+        optimizing = True
+        optRoute = []
+        auxList = self.coordenadas.copy()
+        closedIndexes = []
+        optRoute.append(auxList[0])
+        closedIndexes.append(0)
+        closerIndex = 0
+        closerDistance = 99999
+        while optimizing:
+            if len(optRoute) == len(self.coordenadas):
+                optimizing = False
+            for x in range(0,len(auxList)):
+                if x not in closedIndexes:
+                    d = math.sqrt((optRoute[-1].x - auxList[x].x)**2 + (optRoute[-1].y - auxList[x].y)**2)
+                    if d < closerDistance:
+                        closerIndex = x
+                        closerDistance = d
+            closedIndexes.append(closerIndex)
+            optRoute.append(auxList[closerIndex])
+            closerDistance = 99999
+        
+        self.coordenadas = []
+        self.coordenadas.extend(optRoute)
         
         

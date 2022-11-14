@@ -43,7 +43,7 @@ class Otimizador:
         while delta_ms < time_ms:
             # atualiza delta
             delta_ms = round(time.time() * 1000) - tin
-            size_rota = len(rota.coords)
+            size_rota = len(rota.coordenadas)
             pos1 = random.randrange(0, size_rota)
             pos2 = random.randrange(0, size_rota)
             swap(rota, pos1, pos2)
@@ -64,7 +64,7 @@ class Otimizador:
             rotaAux = rota.copy()
             rotaAux.shuffle()
             if rotaAux.comprimento() < minComprimento:
-                rota.coords = rotaAux.coords
+                rota.coordenadas = rotaAux.coordenadas
                 minComprimento = rota.comprimento()
 
     # Aqui você deve usar sua criatividade e propor um algoritmo de
@@ -79,13 +79,18 @@ class Otimizador:
         # inicia a partir de uma rota não otimizada
         optimizing = True
         optRoute = []
-        auxList = rota.coordenadas.copy()
+        follow = []
+        auxList= rota.coordenadas.copy()
+        follow = rota.coordenadas.copy()
         closedIndexes = []
         optRoute.append(auxList[0])
         closedIndexes.append(0)
         closerIndex = 0
         closerDistance = 99999
-        while optimizing:
+        tin = round(time.time() * 1000)
+        delta_ms = round(time.time() * 1000) - tin
+        while optimizing or delta_ms < time_ms:
+            delta_ms = round(time.time() * 1000) - tin
             if len(optRoute) == len(rota.coordenadas):
                 optimizing = False
             for x in range(0,len(auxList)):
@@ -93,10 +98,15 @@ class Otimizador:
                     d = math.sqrt((optRoute[-1].x - auxList[x].x)**2 + (optRoute[-1].y - auxList[x].y)**2)
                     if d < closerDistance:
                         closerIndex = x
-                        closerDistance = d
+                        closerDistance = d 
+            if 1<len(optRoute) < len(rota.coordenadas):
+                print(len(optRoute))
+                follow[closerIndex] = auxList[len(optRoute)-1] 
+                follow[len(optRoute)-1] = auxList[closerIndex]
             closedIndexes.append(closerIndex)
             optRoute.append(auxList[closerIndex])
             closerDistance = 99999
+            
         
         rota.coordenadas = []
         rota.coordenadas.extend(optRoute)
@@ -114,9 +124,9 @@ class Otimizador:
 
 
 def swap(rota: Rota, pos1: int, pos2: int):
-    aux = rota.coords[pos1]
-    rota.coords[pos1] = rota.coords[pos2]
-    rota.coords[pos2] = aux
+    aux = rota.coordenadas[pos1]
+    rota.coordenadas[pos1] = rota.coordenadas[pos2]
+    rota.coordenadas[pos2] = aux
 
 
 # Cria uma rota Vazia.
