@@ -28,8 +28,7 @@ class Rota:
                 d = math.sqrt((x.x - aux.x)**2 + (x.y - aux.y)**2)
                 comprimento += d
             aux = x
-         
-        return str(comprimento)
+        return int(comprimento)
     
     def copy(self):
         aux = Rota()

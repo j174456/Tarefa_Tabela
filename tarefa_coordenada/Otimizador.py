@@ -3,17 +3,15 @@ from Rota import Rota
 import time
 from matplotlib import pyplot
 import math
-
-# Ainda não é para entregar. Em grupo de 3 pessoas.
-# Vai ser pedido para entregar futuramente, junto
-# com o conteúdo da aula 11.
-
-
 class Otimizador:
     # Este é o construtor do otimizador. Você pode adicionar código aqui
     # se julgar necessário.
     def __init__(self):
         self.plt = pyplot
+        self.plt.xlabel("Tempo (ms)")
+        self.plt.ylabel("Comprimento (pixel)")
+        self.plt.title("Comprimento vs Tempo (ms)")
+        self.plt.grid(True)
 
     # Este método de otimização já está implementado.
     # Toda vez que o comprimento for atualizado para um valor menor, é
@@ -33,6 +31,10 @@ class Otimizador:
     # e deve ser mais grossa que a linha dos outros algoritmos.
     # Todas as linhas devem iniciar no tempo zero e terminar no tempo final.
     def singleSwap(self, rota: Rota, time_ms: int):
+
+        aux_comp = []
+        aux_time = []
+
         # Inicia a partir de uma rota não otimizada
         rota.shuffle()
         # Tempo de entrada na função.
@@ -40,6 +42,7 @@ class Otimizador:
         # Tempo gasto na função.
         delta_ms = round(time.time() * 1000) - tin
         minComprimento = rota.comprimento()
+        
         while delta_ms < time_ms:
             # atualiza delta
             delta_ms = round(time.time() * 1000) - tin
@@ -53,12 +56,21 @@ class Otimizador:
                 # desfaz o swap
                 swap(rota, pos1, pos2)
 
+            aux_comp.append(minComprimento)
+            aux_time.append(delta_ms)
+
+        self.plt.plot(aux_time, aux_comp, color='#000000', label="SingleSwap",linewidth=2)
+
     def aleatorio(self, rota: Rota, time_ms: int):
+
+        aux_comp = []
+        aux_time = []
+
         # inicia a partir de uma rota não otimizada
         rota.shuffle()
         tin = round(time.time() * 1000)
         delta_ms = round(time.time() * 1000) - tin
-        minComprimento = rota.comprimento()
+        minComprimento = (rota.comprimento())
         while delta_ms < time_ms:
             delta_ms = round(time.time() * 1000) - tin
             rotaAux = rota.copy()
@@ -66,6 +78,10 @@ class Otimizador:
             if rotaAux.comprimento() < minComprimento:
                 rota.coordenadas = rotaAux.coordenadas
                 minComprimento = rota.comprimento()
+            aux_comp.append(minComprimento)
+            aux_time.append(delta_ms)
+
+        self.plt.plot(aux_time, aux_comp, color='#29C472', label="Aleatório",linewidth=3)
 
     # Aqui você deve usar sua criatividade e propor um algoritmo de
     # otimização. O algoritmo deixado é apenas um exemplo.
@@ -75,7 +91,11 @@ class Otimizador:
     # deve estar um nome curto que identifique o seu grupo. O nome deve
     # ser composto de um nome dos integrantes. Exemplo:
     # Rodrigo_Ivan_Celso
-    def Arthur_Joaop_Myrelle(self, rota: Rota, time_ms: int):
+    def Arthur_JoaoP_Myrelle(self, rota: Rota, time_ms: int):
+
+        aux_comp = []
+        aux_time = []
+
         # inicia a partir de uma rota não otimizada
         optimizing = True
         optRoute = []
@@ -89,8 +109,10 @@ class Otimizador:
         closerDistance = 99999
         tin = round(time.time() * 1000)
         delta_ms = round(time.time() * 1000) - tin
-        while optimizing or delta_ms < time_ms:
+
+        while optimizing or delta_ms < time_ms:            
             delta_ms = round(time.time() * 1000) - tin
+
             if len(optRoute) == len(rota.coordenadas):
                 optimizing = False
             for x in range(0,len(auxList)):
@@ -99,18 +121,24 @@ class Otimizador:
                     if d < closerDistance:
                         closerIndex = x
                         closerDistance = d 
+
             if 1<len(optRoute) < len(rota.coordenadas):
-                print(len(optRoute))
                 follow[closerIndex] = auxList[len(optRoute)-1] 
                 follow[len(optRoute)-1] = auxList[closerIndex]
             closedIndexes.append(closerIndex)
             optRoute.append(auxList[closerIndex])
-            closerDistance = 99999
-            
-        
+            closerDistance = 99999   
+##########################################################################################################
+            # aux_time.append(delta_ms)
+            # aux_comp.append(rota.comprimento())
+            #É PRECISO CALCULAR O COMPRIMENTO DA ROTA QUE ESTA SENDO MODIFICADA EM TEMPO DE EXECUÇÃO
+            # NÃO CONSIGO VER O COMPRIMENTO PRA COLOCAR NO EIXO Y                
+##########################################################################################################
+
         rota.coordenadas = []
         rota.coordenadas.extend(optRoute)
-            
+
+        self.plt.plot(aux_time, aux_comp, color='#33A8FF', label="Arthur_JoaoP_Myrelle",linewidth=3)        
 
 
 
@@ -144,5 +172,5 @@ opt.singleSwap(r, time_ms)
 # Otimização aleatório
 opt.aleatorio(r, time_ms)
 # Otimização feita por seu grupo
-opt.Arthur_Joaop_Myrelle(r, time_ms)
+opt.Arthur_JoaoP_Myrelle(r, time_ms)
 opt.salvaFigura("Resultado_" + str(size) + ".png")
