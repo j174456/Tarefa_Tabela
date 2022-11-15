@@ -99,9 +99,8 @@ class Otimizador:
         # inicia a partir de uma rota não otimizada
         optimizing = True
         optRoute = []
-        follow = []
+        tempRota = Rota()
         auxList= rota.coordenadas.copy()
-        follow = rota.coordenadas.copy()
         closedIndexes = []
         optRoute.append(auxList[0])
         closedIndexes.append(0)
@@ -110,11 +109,12 @@ class Otimizador:
         tin = round(time.time() * 1000)
         delta_ms = round(time.time() * 1000) - tin
 
-        while optimizing or delta_ms < time_ms:            
+        while delta_ms < time_ms:            
             delta_ms = round(time.time() * 1000) - tin
 
             if len(optRoute) == len(rota.coordenadas):
                 optimizing = False
+
             for x in range(0,len(auxList)):
                 if x not in closedIndexes:
                     d = math.sqrt((optRoute[-1].x - auxList[x].x)**2 + (optRoute[-1].y - auxList[x].y)**2)
@@ -122,22 +122,26 @@ class Otimizador:
                         closerIndex = x
                         closerDistance = d 
 
-            if 1<len(optRoute) < len(rota.coordenadas):
-                follow[closerIndex] = auxList[len(optRoute)-1] 
-                follow[len(optRoute)-1] = auxList[closerIndex]
-            closedIndexes.append(closerIndex)
-            optRoute.append(auxList[closerIndex])
-            closerDistance = 99999   
+            if optimizing:     
+                closedIndexes.append(closerIndex)
+                optRoute.append(auxList[closerIndex])
+                closerDistance = 99999
+                tempRota.coordenadas = []
+                tempRota.coordenadas = optRoute.copy()
+                difference =  tempRota.comprimento()
+                print(difference)
 ##########################################################################################################
-            # aux_time.append(delta_ms)
-            # aux_comp.append(rota.comprimento())
+            aux_time.append(delta_ms)
+            aux_comp.append(difference)
             #É PRECISO CALCULAR O COMPRIMENTO DA ROTA QUE ESTA SENDO MODIFICADA EM TEMPO DE EXECUÇÃO
             # NÃO CONSIGO VER O COMPRIMENTO PRA COLOCAR NO EIXO Y                
 ##########################################################################################################
 
         rota.coordenadas = []
         rota.coordenadas.extend(optRoute)
-
+        aux_time.append(delta_ms)
+        aux_comp.append(rota.comprimento())
+        print(rota.comprimento())
         self.plt.plot(aux_time, aux_comp, color='#33A8FF', label="Arthur_JoaoP_Myrelle",linewidth=3)        
 
 
